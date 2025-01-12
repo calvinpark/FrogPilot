@@ -205,6 +205,15 @@ DevicePanel::DevicePanel(SettingsWindow *parent) : ListWidget(parent) {
 
   // offroad-only buttons
 
+  auto tskBtn = new ButtonControl(tr("TSK Keyboard"), tr("SHOW"));
+  connect(tskBtn, &ButtonControl::clicked, [this, tskBtn]() {
+    tskBtn->setEnabled(false);
+    QProcess *process = new QProcess(this);
+    process->start("/data/openpilot/system/ui/tsk-kbd");
+    tskBtn->setEnabled(true);
+  });
+  addItem(tskBtn);
+
   auto dcamBtn = new ButtonControl(tr("Driver Camera"), tr("PREVIEW"),
                                    tr("Preview the driver facing camera to ensure that driver monitoring has good visibility. (vehicle must be off)"));
   connect(dcamBtn, &ButtonControl::clicked, [this, dcamBtn]() {
